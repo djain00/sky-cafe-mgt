@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sky Cafe - Worker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Worker - Prepared Orders</h1>
+    <div id="orders"></div>
+</div>
+
+<script>
+fetch('../backend/fetch_orders.php')
+    .then(res => res.json())
+    .then(data => {
+        let html = '<table><tr><th>Table</th><th>Name</th><th>Items</th><th>Action</th></tr>';
+        data.forEach(order => {
+            if (order.status === 'Prepared' && order.served === 'No') {
+                html += `<tr>
+                    <td>${order.table_number}</td>
+                    <td>${order.customer_name}</td>
+                    <td>${order.food_items}</td>
+                    <td>
+                        <form action="../backend/mark_served.php" method="POST">
+                            <input type="hidden" name="id" value="${order.id}">
+                            <button type="submit">Mark as Served</button>
+                        </form>
+                    </td>
+                </tr>`;
+            }
+        });
+        html += '</table>';
+        document.getElementById('orders').innerHTML = html;
+    });
+</script>
+</body>
+</html>

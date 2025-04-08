@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sky Cafe - Manager Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Manager Dashboard</h1>
+    <div>
+        <label>Filter by Table Number:</label>
+        <input type="number" id="filterTable" placeholder="Enter table number">
+        <label>Status:</label>
+        <select id="filterStatus">
+            <option value="">All</option>
+            <option value="Not Prepared">Not Prepared</option>
+            <option value="Prepared">Prepared</option>
+            <option value="Served">Served</option>
+            <option value="Billed">Billed</option>
+        </select>
+        <button onclick="filterOrders()">Apply Filters</button>
+    </div>
+
+    <div id="summary"></div>
+    <div id="orders"></div>
+</div>
+
+<script>
+fetch('../backend/fetch_orders.php')
+    .then(res => res.json())
+    .then(data => {
+        window.allOrders = data;
+        displayOrders(data);
+        showSummary(data);
+    });
+
+function displayOrders(data) {
+    let html = '<table><tr><th>Table</th><th>Name</th><th>Items</th><th>Status</th><th>Served</th><th>Billed</th></tr>';
+    data.forEach(order => {
+        html += `<tr>
+            <td>${order.table_number}</td>
+            <td>${order.customer_name}</td>
+            <td>${order.food_items}</td>
+            <td>${order.status}</td>
+            <td>${order.served}</td>
+            <td>${order.billed}</td>
+        </tr>`;
+    });
+    html += '</table>';
+    document.getElementById('orders').innerHTML = html;
+}
+
+function filterOrders() {
+    const table = document.getElementById('filterTable').value;
+    const status = document.getElementById('filterStatus').value;
+
+    let filtered = window.allOrders.filter(order => {
+        let matchTable = table ? order.table_number == table : true;
+        let matchStatus = true;
+
+        if (status === "Served") matchStatus = order.served === "Yes";
+        else if (status === "Billed") matchStatus = order.billed === "Yes";
+        else if (status) matchStatus = order.status === status;
+
+        return matchTable && matchStatus;
+    });
+
+    displayOrders(filtered);
+}
+
+function showSummary(data) {
+    const totalOrders = data.length;
+
+    let itemCounts = {};
+    data.forEach(order => {
+        const items = order.food_items.split(',');
+        items.forEach(item => {
+            const key = item.trim();
+            itemCounts[key] = (itemCounts[key] || 0) + 1;
+        });
+    });
+
+    const topItem = Object.keys(itemCounts).reduce((a, b) => itemCounts[a] > itemCounts[b] ? a : b, "");
+
+    document.getElementById("summary").innerHTML = `
+        <p><strong>Total Orders Today:</strong> ${totalOrders}</p>
+        <p><strong>Most Popular Item:</strong> ${topItem} (${itemCounts[topItem]} times)</p>
+    `;
+}
+</script>
+</body>
+</html>

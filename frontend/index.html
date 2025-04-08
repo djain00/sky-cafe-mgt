@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sky Cafe - Place Order</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Sky Cafe - Place Your Order</h1>
+    <form action="../backend/place_order.php" method="POST">
+        <label for="table_number">Table Number:</label>
+        <input type="number" name="table_number" required><br><br>
+
+        <label for="customer_name">Customer Name:</label>
+        <input type="text" name="customer_name" required><br><br>
+
+        <label>Select Menu Items:</label><br>
+        <input type="checkbox" name="food_items[]" value="Veg Spring Rolls"> Veg Spring Rolls (₹250)<br>
+        <input type="checkbox" name="food_items[]" value="Chicken Dim Sums"> Chicken Dim Sums (₹350)<br>
+        <input type="checkbox" name="food_items[]" value="Crispy Prawn Tempura"> Crispy Prawn Tempura (₹450)<br>
+        <input type="checkbox" name="food_items[]" value="Thai Papaya Salad"> Thai Papaya Salad (₹300)<br>
+        <input type="checkbox" name="food_items[]" value="Hot and Sour Soup"> Hot and Sour Soup (₹250)<br>
+        <input type="checkbox" name="food_items[]" value="Tom Yum Soup"> Tom Yum Soup (₹270)<br>
+        <input type="checkbox" name="food_items[]" value="Kung Pao Chicken"> Kung Pao Chicken (₹450)<br>
+        <input type="checkbox" name="food_items[]" value="Veg Manchurian Gravy"> Veg Manchurian Gravy (₹400)<br>
+        <input type="checkbox" name="food_items[]" value="Schezwan Fried Rice"> Schezwan Fried Rice (₹400)<br>
+        <input type="checkbox" name="food_items[]" value="Hakka Noodles"> Hakka Noodles (₹350)<br>
+        <input type="checkbox" name="food_items[]" value="Green Thai Curry"> Green Thai Curry (₹500)<br>
+        <input type="checkbox" name="food_items[]" value="Pad Thai Noodles"> Pad Thai Noodles (₹400)<br>
+        <input type="checkbox" name="food_items[]" value="Sushi Platter"> Sushi Platter (₹800)<br>
+        <input type="checkbox" name="food_items[]" value="Teriyaki Chicken Bowl"> Teriyaki Chicken Bowl (₹550)<br>
+        <input type="checkbox" name="food_items[]" value="Mango Sticky Rice"> Mango Sticky Rice (₹300)<br>
+        <input type="checkbox" name="food_items[]" value="Matcha Cheesecake Slice"> Matcha Cheesecake Slice (₹350)<br>
+        <input type="checkbox" name="food_items[]" value="Jasmine Tea"> Jasmine Tea (₹150)<br>
+        <input type="checkbox" name="food_items[]" value="Thai Iced Tea"> Thai Iced Tea (₹200)<br>
+        <input type="checkbox" name="food_items[]" value="Soft Drinks"> Soft Drinks (₹100)<br><br>
+
+        <button type="submit">Submit Order</button>
+    </form>
+</div>
+</body>
+</html>

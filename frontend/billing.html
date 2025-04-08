@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sky Cafe - Billing</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Billing - Served Orders</h1>
+    <div id="orders"></div>
+</div>
+
+<script>
+const prices = {
+    "Veg Spring Rolls": 250,
+    "Chicken Dim Sums": 350,
+    "Crispy Prawn Tempura": 450,
+    "Thai Papaya Salad": 300,
+    "Hot and Sour Soup": 250,
+    "Tom Yum Soup": 270,
+    "Kung Pao Chicken": 450,
+    "Veg Manchurian Gravy": 400,
+    "Schezwan Fried Rice": 400,
+    "Hakka Noodles": 350,
+    "Green Thai Curry": 500,
+    "Pad Thai Noodles": 400,
+    "Sushi Platter": 800,
+    "Teriyaki Chicken Bowl": 550,
+    "Mango Sticky Rice": 300,
+    "Matcha Cheesecake Slice": 350,
+    "Jasmine Tea": 150,
+    "Thai Iced Tea": 200,
+    "Soft Drinks": 100
+};
+
+fetch('../backend/fetch_orders.php')
+    .then(res => res.json())
+    .then(data => {
+        let html = '<table><tr><th>Table</th><th>Name</th><th>Items</th><th>Total</th><th>Action</th></tr>';
+        data.forEach(order => {
+            if (order.served === 'Yes' && order.billed === 'No') {
+                const items = order.food_items.split(',');
+                let total = 0;
+                items.forEach(item => total += prices[item.trim()] || 0);
+
+                html += `<tr>
+                    <td>${order.table_number}</td>
+                    <td>${order.customer_name}</td>
+                    <td>${order.food_items}</td>
+                    <td>₹${total}</td>
+                    <td>
+                        <form action="../backend/mark_billed.php" method="POST">
+                            <input type="hidden" name="id" value="${order.id}">
+                            <button type="submit">Mark as Billed</button>
+                        </form>
+                    </td>
+                </tr>`;
+            }
+        });
+        html += '</table>';
+        document.getElementById('orders').innerHTML = html;
+    });
+</script>
+</body>
+</html>
