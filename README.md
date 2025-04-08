@@ -33,5 +33,3 @@ This is a **basic cafe management software** built using:
 ### ✅ That’s It!
 **Hurry, it works!** 🎉  
 You’re now ready to manage your cafe orders efficiently with **Sky Cafe**.
-
-Let me know if you'd like this as a `.txt`, `.md`, or PDF version!
