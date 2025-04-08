@@ -1,7 +1,3 @@
-Sure! Here's your text nicely formatted, like a quick-start guide or a README intro:
-
----
-
 ## ☕ Sky Cafe Management System – Quick Start Guide
 
 ### 🚀 What is this?
